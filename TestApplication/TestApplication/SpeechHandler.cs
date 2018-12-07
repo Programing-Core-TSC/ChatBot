@@ -25,13 +25,35 @@ namespace TestApplication
         //Sad ---- 2
         //Angry ---- 3
         //Calm ---- 4
+        //Unknown ---- 5
+
+        public static string RemoveSpecialCharacters(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < str.Length; i++)
+            {
+                if ((str[i] >= '0' && str[i] <= '9') || (str[i] >= 'A' && str[i] <= 'z' || str[i] == ' '))
+                {
+                    sb.Append(str[i]);
+                }
+            }
+            return sb.ToString();
+        }
 
 
         public int EmotionResponse()
         {
-            UserMessage = Form1.form.userChatBox.Text;
-            string[] messageWords = UserMessage.Split(' '); //Turns large string from user and breaks it down into words.
+            neutralWords = 0.000;
+            happyWords = 0.000;
+            sadWords = 0.000;
+            angryWords = 0.000;
+            calmWords = 0.000;
+            totalWords = 0.000;
 
+            UserMessage = Form1.form.userChatBox.Text;
+            RemoveSpecialCharacters(UserMessage);
+            UserMessage.ToLower();
+            string[] messageWords = UserMessage.Split(' '); //Turns large string from user and breaks it down into words.
             foreach (var word in messageWords) //Checks each word to see if it's most likely a more positive statement, negative statement, or other.
             {
                 if(word == "happy" || word == "great" || word == "fun" || word == "fantastic" || word == "cool" || word == "cute" || word == "awesome" || word == "amazing")
@@ -67,27 +89,36 @@ namespace TestApplication
                 }
             }
             var happyPercent = happyWords/totalWords;
-            Form1.form.test.Text = happyWords.ToString();
+            var sadPercent = sadWords/totalWords;
+            var angryPercent = angryWords/totalWords;
+            var calmPercent = calmWords/totalWords;
+            var neutralPercent = neutralWords/totalWords;
 
-            if (emotion == 1) //Happy Reaction
+            
+
+            if (happyPercent > sadPercent && happyPercent > angryPercent && happyPercent > calmPercent && happyPercent > neutralPercent) //Happy Reaction
             {
                 return 1;
             }
-            else if (emotion == 2) //Sad Reaction
+            else if (sadPercent > happyPercent && sadPercent > angryPercent && sadPercent > calmPercent && sadPercent > neutralPercent) //Sad Reaction
             {
                 return 2;
             }
-            else if (emotion == 3) //Angry Reaction
+            else if (angryPercent > happyPercent && angryPercent > sadPercent && angryPercent > calmPercent && angryPercent > neutralPercent) //Angry Reaction
             {
                 return 3;
             }
-            else if (emotion == 4) //Calm Reaction
+            else if (calmPercent > happyPercent && calmPercent > sadPercent && calmPercent > angryPercent && calmPercent > neutralPercent) //Calm Reaction
             {
                 return 4;
             }
-            else //Neutral Reaction - Used if no other reaction is similar.
+            else if (neutralPercent > happyPercent && neutralPercent > sadPercent && neutralPercent > angryPercent && neutralPercent > calmPercent) //Neutral Reaction
             {
                 return 0;
+            }
+            else
+            {
+                return 5;
             }
         }
 
