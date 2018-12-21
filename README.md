@@ -5,6 +5,8 @@ Current Version: v0.1.4
 
 ChatBot is, like the name implies, a simple chat bot program written in C#. It is a project created with the idea to make a program to interpret statements from a user without using a Microsoft Azure API. The project went nicely for a while, but eventually some buggy antivirus software prevented proper development locally and the project was uploaded to GitHub for storage.
 
+This project should now have a Webhook in my discord server.
+
 ### Documentation
 ChatBot is meant to break down sentences sent by users into individual works to analyze. Then, after analysis, the program will choose an appropriate response from a list of pre-generated ones and reply to the user. It isn't too accurate, but that's due to it being early in development. Currently, the bot is not properly functional due to errors from antivirus, leading to a halt on development for the moment. 
 
